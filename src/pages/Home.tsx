@@ -74,7 +74,7 @@ export default function Blank() {
       let signedTokenContract = contract.connect(signer);
       let tx = await signedTokenContract.approve(
         swapContract.address,
-        toBigNum(_amountIn, 18)
+        toBigNum(_amountIn, sourceToken.decimal)
       );
       await tx.wait();
     } catch (error) { }
@@ -176,7 +176,7 @@ export default function Blank() {
 
   const getTokenBalance = async (token: IToken) => {
     if (signer) {
-      console.log("target token----",token)
+      console.log("target token----", token)
       let provider = signer?.provider;
       const contract = new ethers.Contract(token.address!, ERC20ABI, provider);
       const balance = await contract.balanceOf(address);
